@@ -1,22 +1,37 @@
 import React from 'react';
-import SearchBar from './SearchBar';
 
-const Sidebar = ({ onSearchResults }) => {
+const Sidebar = ({ currentView, setCurrentView }) => {
   return (
     <aside className="sidebar">
-      <SearchBar onSearchResults={onSearchResults} />
+      <div className="logo" style={{ color: 'var(--am-text)', fontSize: '20px', fontWeight: 'bold', marginBottom: '24px' }}>
+        <span style={{ color: 'var(--am-accent)' }}></span> Music
+      </div>
       <nav>
         <ul>
-          <li className="active"><span className="icon">🏠</span> Home</li>
-          <li><span className="icon">🌐</span> Browse</li>
-          <li><span className="icon">📻</span> Radio</li>
-        </ul>
-        <h3>Library</h3>
-        <ul>
-          <li><span className="icon">⏱️</span> Recently Added</li>
-          <li><span className="icon">🎤</span> Artists</li>
-          <li><span className="icon">💿</span> Albums</li>
-          <li><span className="icon">❤️</span> Liked</li>
+          <li className={currentView === 'search' ? 'active' : ''} onClick={() => setCurrentView('search')}>
+            <span className="icon" style={{ display: 'inline-flex', marginRight: '12px', fontSize: '18px', color: currentView === 'search' ? 'var(--am-accent)' : 'inherit' }}>
+              <i className="bi bi-search"></i>
+            </span>
+            Search
+          </li>
+          <li className={currentView === 'home' ? 'active' : ''} onClick={() => setCurrentView('home')}>
+            <span className="icon" style={{ display: 'inline-flex', marginRight: '12px', fontSize: '18px', color: currentView === 'home' ? 'var(--am-accent)' : 'inherit' }}>
+              <i className={currentView === 'home' ? "bi bi-house-door-fill" : "bi bi-house-door"}></i>
+            </span>
+            Home
+          </li>
+          <li className={currentView === 'new' ? 'active' : ''} onClick={() => setCurrentView('new')}>
+            <span className="icon" style={{ display: 'inline-flex', marginRight: '12px', fontSize: '18px', color: currentView === 'new' ? 'var(--am-accent)' : 'inherit' }}>
+              <i className={currentView === 'new' ? "bi bi-grid-fill" : "bi bi-grid"}></i>
+            </span>
+            New
+          </li>
+          <li className={currentView === 'radio' ? 'active' : ''} onClick={() => setCurrentView('radio')}>
+            <span className="icon" style={{ display: 'inline-flex', marginRight: '12px', fontSize: '18px', color: currentView === 'radio' ? 'var(--am-accent)' : 'inherit' }}>
+              <i className="bi bi-broadcast"></i>
+            </span>
+            Radio
+          </li>
         </ul>
       </nav>
     </aside>

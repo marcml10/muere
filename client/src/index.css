@@ -1,11 +1,12 @@
 :root {
-  --am-bg: #ffffff;
-  --am-sidebar: #fbfbfb;
-  --am-text: #000000;
-  --am-text-secondary: #8e8e93;
+  --am-bg: #1F1F1F;
+  --am-sidebar: #181818;
+  --am-text: #ffffff;
+  --am-text-secondary: #a1a1a6;
   --am-accent: #fa243c;
-  --am-border: #e5e5e5;
-  --am-player-bg: rgba(255, 255, 255, 0.85);
+  --am-border: #333333;
+  --am-player-bg: rgba(31, 31, 31, 0.85);
+  --am-hover: #2c2c2e;
   --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-text: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }

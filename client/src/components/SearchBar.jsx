@@ -28,14 +28,43 @@ const SearchBar = ({ onSearchResults }) => {
     }
   };
 
+  const clearSearch = () => {
+    setSearchQuery('');
+  };
+
   return (
-    <form className="search-bar" onSubmit={handleSearch}>
+    <form className="search-bar" onSubmit={handleSearch} style={{ position: 'relative', width: '100%', marginBottom: '0' }}>
+      <span style={{ position: 'absolute', left: '20px', top: '50%', transform: 'translateY(calc(-50% + 1px))', color: 'var(--am-text-secondary)', fontSize: '15px', pointerEvents: 'none' }}>
+        <i className="bi bi-search"></i>
+      </span>
       <input 
         type="text" 
         placeholder="Search" 
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-input"
+        style={{ paddingRight: searchQuery ? '40px' : '20px' }}
       />
+      {searchQuery && (
+        <span 
+          onClick={clearSearch}
+          style={{ 
+            position: 'absolute', 
+            right: '15px', 
+            top: '50%', 
+            transform: 'translateY(-50%)', 
+            color: 'var(--am-text-secondary)', 
+            fontSize: '14px', 
+            cursor: 'pointer', 
+            padding: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            opacity: 0.7
+          }}>
+          <i className="bi bi-x-circle-fill"></i>
+        </span>
+      )}
     </form>
   );
 };

@@ -3,9 +3,10 @@
 .apple-music-layout {
   display: grid;
   grid-template-columns: 260px 1fr;
-  grid-template-rows: 1fr 80px;
+  grid-template-rows: 1fr;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 
 .sidebar {
@@ -14,19 +15,33 @@
   background-color: var(--am-sidebar);
   border-right: 1px solid var(--am-border);
   padding: 20px;
+  padding-bottom: 120px;
   overflow-y: auto;
 }
 
-.search-bar input {
+.search-input {
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--am-border);
-  background-color: #f1f1f2;
-  margin-bottom: 24px;
-  font-size: 14px;
+  padding: 8px 20px 9px 43px;
+  border-radius: 24px;
+  border: 2px solid transparent;
+  background-color: var(--am-hover);
+  color: var(--am-text);
+  font-size: 15px;
+  font-weight: 500;
   outline: none;
   box-sizing: border-box;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #ffffff;
+  background-color: var(--am-sidebar);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.search-input::placeholder {
+  color: var(--am-text-secondary);
+  font-weight: 400;
 }
 
 .sidebar nav h3 {
@@ -51,19 +66,21 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--am-text);
-  transition: background-color 0.2s ease;
+  font-size: 14px;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.85); /* Slightly dimmer whiteness by default */
+  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 .sidebar nav ul li:hover {
-  background-color: #ebebeb;
+  background-color: transparent; /* No color change */
+  opacity: 0.7; /* Dimmer whiteness of the font slightly */
 }
 
 .sidebar nav ul li.active {
-  color: var(--am-accent);
   background-color: transparent;
+  font-weight: 700;
+  color: var(--am-text);
 }
 
 .sidebar nav ul li .icon {
@@ -75,6 +92,7 @@
   grid-column: 2;
   grid-row: 1;
   padding: 40px 60px;
+  padding-bottom: 120px;
   overflow-y: auto;
 }
 
@@ -116,6 +134,32 @@
   gap: 24px;
 }
 
+/* Specific layout for Browse Categories (wider, flatter rectangles) */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.category-card {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.category-card:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
+}
+
+.category-art {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  background-color: var(--am-border);
+}
+
 .album-card {
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -128,10 +172,10 @@
 .album-art {
   width: 100%;
   aspect-ratio: 1;
-  background-color: #eaeaea;
+  background-color: var(--am-hover);
   border-radius: 8px;
   margin-bottom: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .artwork-1 { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); }
@@ -155,84 +199,320 @@
 }
 
 .player-bar {
-  grid-column: 1 / 3;
-  grid-row: 2;
-  background-color: var(--am-player-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--am-border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  z-index: 10;
-}
-
-.now-playing {
-  display: flex;
-  align-items: center;
-  width: 260px;
-}
-
-.mini-art {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-  border-radius: 6px;
-  margin-right: 14px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.track-info .track-title {
-  margin: 0 0 2px 0;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.track-info .track-artist {
-  margin: 0;
-  font-size: 12px;
-  color: var(--am-text-secondary);
-}
-
-.player-controls {
+  position: fixed;
+  bottom: 20px;
+  left: calc(260px + ((100vw - 260px) / 2));
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 720px;
+  height: 56px;
+  border-radius: 28px;
+  background-color: rgba(30, 30, 30, 0.25); /* 75% transparent */
+  backdrop-filter: blur(75px) saturate(180%);
+  -webkit-backdrop-filter: blur(75px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
-  gap: 20px;
+  padding: 0 16px;
+  gap: 16px;
+  z-index: 100;
+  box-sizing: border-box;
 }
 
-.control-btn {
+/* Transport controls group */
+.dock-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* Generic dock button */
+.dock-btn {
   background: none;
   border: none;
-  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  color: var(--am-text);
-  padding: 8px;
+  padding: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0.8;
-  transition: opacity 0.2s;
+  border-radius: 50%;
+  transition: color 0.15s ease;
 }
 
-.control-btn:hover {
+.dock-btn:hover {
+  color: #ffffff;
+}
+
+/* Track info section */
+.dock-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding-left: 16px;
+  padding-bottom: 4px;
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+}
+
+/* Mini album art */
+.dock-art {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dock-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Track text */
+.dock-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+}
+
+.dock-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dock-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+.dock-artist {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.45);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right action buttons */
+.dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+  padding-left: 12px;
+}
+
+/* Progress Bar and Hover Blur Effects */
+.dock-progress-wrapper {
+  position: absolute;
+  bottom: 5px;
+  left: 16px;
+  right: 16px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1), bottom 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.dock-progress-fill {
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.dock-progress-input {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* Timestamps shown on hover */
+.dock-time {
+  position: absolute;
+  top: -16px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+.dock-time-current { left: 0; }
+.dock-time-total { right: 0; }
+
+/* On Hover: Thicken the bar and show times */
+.dock-progress-wrapper:hover {
+  height: 5px;
+  bottom: 3px;
+}
+
+.dock-progress-wrapper:hover .dock-time {
   opacity: 1;
 }
 
-.play-btn {
-  font-size: 26px;
+/* On Hover: Blur the track info and art */
+.dock-art, .dock-info, .dock-more-btn {
+  transition: filter 0.3s ease, opacity 0.3s ease;
 }
 
-.volume-control {
+.dock-track:has(.dock-progress-wrapper:hover) .dock-art,
+.dock-track:has(.dock-progress-wrapper:hover) .dock-info,
+.dock-track:has(.dock-progress-wrapper:hover) .dock-more-btn {
+  filter: blur(6px);
+  opacity: 0.4;
+}
+
+/* Queue Panel */
+.queue-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 320px;
+  background-color: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 90; /* below player-bar if it overlaps */
+  animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.queue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 24px 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.queue-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.queue-item {
   display: flex;
   align-items: center;
-  width: 200px;
-  justify-content: flex-end;
   gap: 12px;
-  color: var(--am-text-secondary);
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.volume-control input {
-  width: 100px;
+.queue-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.queue-item.playing {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.queue-item-art {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.queue-item-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+
+.queue-item-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue-item-artist {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.queue-item-remove {
+  display: none !important;
+}
+
+.queue-item:hover .queue-item-remove {
+  display: flex !important;
+}
+
+/* Volume Slider */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+  flex: 1;
+  margin: 0 12px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
   cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
 }
