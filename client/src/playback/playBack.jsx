@@ -1,7 +1,9 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import { HistoryContext } from './HistoryContext';
+import historyStorage from './historyStorage';
 
 // Create a Context for the playback state
-const PlaybackContext = createContext();
+export const PlaybackContext = createContext();
 
 // Create a Provider component that holds the state
 export const PlaybackProvider = ({ children }) => {
@@ -14,6 +16,19 @@ export const PlaybackProvider = ({ children }) => {
   const [volume, setVolume] = useState(100);
   const [prevVolume, setPrevVolume] = useState(100);
 
+  const historyContext = useContext(HistoryContext);
+
+  // Synchronize playback track info to HistoryContext and historyStorage
+  useEffect(() => {
+    if (currentTrack && currentTrack.id) {
+      if (historyContext?.recordTrack) {
+        historyContext.recordTrack(currentTrack);
+      } else {
+        historyStorage.addTrack(currentTrack);
+      }
+    }
+  }, [currentTrack?.id, historyContext]);
+
   const toggleMute = () => {
     if (volume > 0) {
       setPrevVolume(volume);
@@ -23,8 +38,16 @@ export const PlaybackProvider = ({ children }) => {
     }
   };
 
-  // When a new track is selected, set it and automatically start playing
+  // When a new track is selected, set it, record to history, and start playing
   const playTrack = (track) => {
+    if (!track) return;
+
+    if (historyContext?.recordTrack) {
+      historyContext.recordTrack(track);
+    } else {
+      historyStorage.addTrack(track);
+    }
+
     if (currentTrack && currentTrack.id === track.id) {
       seekTo(0);
       setIsPlaying(true);
@@ -64,7 +87,8 @@ export const PlaybackProvider = ({ children }) => {
       setSeekToTime,
       volume,
       setVolume,
-      toggleMute
+      toggleMute,
+      history: historyContext?.history || []
     }}>
       {children}
     </PlaybackContext.Provider>

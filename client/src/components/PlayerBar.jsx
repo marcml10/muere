@@ -64,25 +64,33 @@ const PlayerBar = () => {
         </div>
         
         {/* Ultra-thin Progress Line */}
-        <div className="dock-progress-wrapper">
-          <span className="dock-time dock-time-current">{formatTime(currentTime)}</span>
-          <span className="dock-time dock-time-total">{formatTime(duration)}</span>
+        {(() => {
+          const effectiveDuration = (Number.isFinite(duration) && duration > 0) 
+            ? duration 
+            : (Number(currentTrack?.duration) > 0 ? Number(currentTrack.duration) : 0);
 
-          <div 
-            className="dock-progress-fill" 
-            style={{ 
-              width: `${(Number.isFinite(currentTime) && Number.isFinite(duration) && duration > 0) ? (currentTime / duration) * 100 : 0}%` 
-            }} 
-          />
-          <input 
-            type="range" 
-            min="0" 
-            max={Number.isFinite(duration) && duration > 0 ? duration : 100} 
-            value={Number.isFinite(currentTime) ? currentTime : 0} 
-            onChange={handleSeek} 
-            className="dock-progress-input"
-          />
-        </div>
+          return (
+            <div className="dock-progress-wrapper">
+              <span className="dock-time dock-time-current">{formatTime(currentTime)}</span>
+              <span className="dock-time dock-time-total">{formatTime(effectiveDuration)}</span>
+
+              <div 
+                className="dock-progress-fill" 
+                style={{ 
+                  width: `${(Number.isFinite(currentTime) && effectiveDuration > 0) ? (currentTime / effectiveDuration) * 100 : 0}%` 
+                }} 
+              />
+              <input 
+                type="range" 
+                min="0" 
+                max={effectiveDuration > 0 ? effectiveDuration : 100} 
+                value={Number.isFinite(currentTime) ? currentTime : 0} 
+                onChange={handleSeek} 
+                className="dock-progress-input"
+              />
+            </div>
+          );
+        })()}
       </div>
 
       {/* Right: Actions */}

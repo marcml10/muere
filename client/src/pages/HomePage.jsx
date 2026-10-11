@@ -3,6 +3,8 @@ import Sidebar from '../components/Sidebar';
 import MainContent from '../components/MainContent';
 import PlayerBar from '../components/PlayerBar';
 import SearchPage from './SearchPage';
+import SettingsPage from './SettingsPage';
+import { HistoryProvider } from '../playback/HistoryContext';
 import { PlaybackProvider } from '../playback/playBack';
 import { QueueProvider } from '../playback/QueueContext';
 import YoutubePlayer from '../playback/youtubePlayer';
@@ -13,8 +15,9 @@ const HomePage = () => {
   const [currentView, setCurrentView] = useState('home');
 
   return (
-    <PlaybackProvider>
-      <QueueProvider>
+    <HistoryProvider>
+      <PlaybackProvider>
+        <QueueProvider>
         <div className="apple-music-layout">
           {/* Hidden YouTube Audio Engine */}
           <YoutubePlayer />
@@ -25,6 +28,7 @@ const HomePage = () => {
           {/* Dynamic Content View */}
           {currentView === 'home' && <MainContent />}
           {currentView === 'search' && <SearchPage />}
+          {currentView === 'settings' && <SettingsPage />}
           {/* Placeholder for others */}
           {currentView === 'new' && <MainContent />}
           {currentView === 'radio' && <MainContent />}
@@ -37,7 +41,8 @@ const HomePage = () => {
         </div>
       </QueueProvider>
     </PlaybackProvider>
-  );
+  </HistoryProvider>
+);
 };
 
 export default HomePage;

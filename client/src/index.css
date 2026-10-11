@@ -1,14 +1,14 @@
 :root {
-  --am-bg: #1F1F1F;
-  --am-sidebar: #181818;
+  --am-bg: #181818;
+  --am-sidebar: #1F1F1F;
   --am-text: #ffffff;
   --am-text-secondary: #a1a1a6;
   --am-accent: #fa243c;
   --am-border: #333333;
   --am-player-bg: rgba(31, 31, 31, 0.85);
   --am-hover: #2c2c2e;
-  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-text: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Google Sans", "Product Sans", Roboto, sans-serif;
+  --font-text: "Google Sans", "Product Sans", Roboto, sans-serif;
 }
 
 body {
@@ -19,6 +19,38 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+button, input, textarea, select {
+  font-family: inherit;
+}
+
 h1, h2, h3, .header h1, .top-picks h2 {
   font-family: var(--font-display);
+}
+
+/* Scrollbar: moving bar alone in light visible grey, track transparent */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.35); /* light visible grey */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

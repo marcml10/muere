@@ -1,20 +1,16 @@
 import React from 'react';
 import { useQueue } from '../playback/QueueContext';
 import { usePlayback } from '../playback/playBack';
+import { formatDuration } from '../search/resultFilter';
 
 const QueuePanel = () => {
-  const { queue, currentIndex, isQueueVisible, toggleQueue, addToQueue, setQueue, removeFromQueue } = useQueue();
+  const { queue, isQueueVisible, setQueue, removeFromQueue, playQueueItem } = useQueue();
   const { currentTrack } = usePlayback();
 
   if (!isQueueVisible) return null;
 
   const handleClear = () => {
-    if (currentIndex >= 0) {
-      // Keep only up to the current track
-      setQueue(queue.slice(0, currentIndex + 1));
-    } else {
-      setQueue([]);
-    }
+    setQueue([]);
   };
 
   return (
@@ -29,15 +25,16 @@ const QueuePanel = () => {
       </div>
 
       <div className="queue-list">
-        {queue.map((track, index) => {
-          if (index <= currentIndex) return null; // Only show upcoming tracks
-          
-          return (
-            <div 
-              key={`${track.id}-${index}`} 
-              className="queue-item"
-              onClick={() => addToQueue(queue, index)}
-            >
+        {queue.map((track, index) => (
+          <div 
+            key={`${track.id}-${index}`} 
+            className="queue-item"
+            onClick={() => {
+              if (playQueueItem) {
+                playQueueItem(index);
+              }
+            }}
+          >
               <div style={{ position: 'relative', display: 'flex' }} className="queue-item-art-wrapper">
                 <img src={track.thumbnailUrl} alt={track.title} className="queue-item-art" />
                 <button 
@@ -70,9 +67,14 @@ const QueuePanel = () => {
                 <div className="queue-item-title">{track.title}</div>
                 <div className="queue-item-artist">{track.artist}</div>
               </div>
+              {track.duration > 0 && (
+                <div style={{ marginLeft: 'auto', fontSize: '12px', color: 'rgba(255, 255, 255, 0.45)', paddingLeft: '8px', flexShrink: 0 }}>
+                  {formatDuration(track.duration)}
+                </div>
+              )}
             </div>
-          );
-        })}
+          )
+        )}
       </div>
     </div>
   );

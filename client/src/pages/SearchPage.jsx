@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import { useQueue } from '../playback/QueueContext';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../search/SearchBar';
+import { formatViewCount, formatDuration, formatSubscriberCount } from '../search/resultFilter';
 
 const SearchPage = () => {
-  const { addToQueue } = useQueue();
+  const { addToQueue, addSongToQueue } = useQueue();
   const [searchResults, setSearchResults] = useState(null);
+  const [artistChannel, setArtistChannel] = useState(null);
+
+  const handleSearchResults = (data) => {
+    if (!data) {
+      setSearchResults(null);
+      setArtistChannel(null);
+      return;
+    }
+    if (Array.isArray(data)) {
+      setSearchResults(data);
+      setArtistChannel(null);
+    } else if (typeof data === 'object') {
+      const tracks = Array.isArray(data.tracks) ? data.tracks : (Array.isArray(data.results) ? data.results : []);
+      setSearchResults(tracks);
+      setArtistChannel(data.channel || null);
+    }
+  };
 
   return (
     <main className="main-content">
@@ -22,7 +40,7 @@ const SearchPage = () => {
           transition: 'max-width 0.3s ease', 
           margin: '0 auto' 
         }}>
-          <SearchBar onSearchResults={setSearchResults} />
+          <SearchBar onSearchResults={handleSearchResults} />
         </div>
       </header>
       
@@ -37,11 +55,11 @@ const SearchPage = () => {
           {searchResults && searchResults.length > 0 ? (
             <div className="spotify-search-layout" style={{ display: 'flex', gap: '24px', width: '100%', alignItems: 'flex-start', flexWrap: 'wrap' }}>
               {/* Left Column: Top Result */}
-              <div style={{ flex: '1 1 350px', maxWidth: '450px' }}>
+              <div style={{ flex: '1 1 350px', maxWidth: '450px', position: 'sticky', top: '20px' }}>
                 <h2 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '16px', color: '#fff', textAlign: 'left', borderBottom: 'none', paddingBottom: 0 }}>Top result</h2>
                 <div 
                   style={{ 
-                    backgroundColor: '#181818', 
+                    backgroundColor: '#1F1F1F', 
                     borderRadius: '8px', 
                     padding: '20px', 
                     cursor: 'pointer',
@@ -55,7 +73,7 @@ const SearchPage = () => {
                     if (playBtn) playBtn.style.transform = 'translateY(0)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = '#181818';
+                    e.currentTarget.style.backgroundColor = '#1F1F1F';
                     const playBtn = e.currentTarget.querySelector('.top-result-play');
                     if (playBtn) playBtn.style.opacity = '0';
                     if (playBtn) playBtn.style.transform = 'translateY(8px)';
@@ -73,6 +91,8 @@ const SearchPage = () => {
                   <div style={{ fontSize: '14px', color: '#b3b3b3', display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <span style={{ color: '#b3b3b3' }}>Song</span>
                     <span>• {searchResults[0].artist}</span>
+                    {searchResults[0].duration > 0 && <span>• {formatDuration(searchResults[0].duration)}</span>}
+                    {searchResults[0].viewCount > 0 && <span>• {formatViewCount(searchResults[0].viewCount)}</span>}
                   </div>
                   
                   {/* Floating Play Button */}
@@ -84,7 +104,7 @@ const SearchPage = () => {
                       right: '20px',
                       width: '48px',
                       height: '48px',
-                      backgroundColor: '#1ed760',
+                      backgroundColor: '#fff',
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
@@ -97,16 +117,94 @@ const SearchPage = () => {
                       boxShadow: '0 8px 8px rgba(0,0,0,0.3)'
                     }}
                   >
-                    <i className="bi bi-play-fill" style={{ marginLeft: '2px' }}></i>
+                    <i className="bi bi-play-fill" style={{ marginLeft: '2px', color: '#000' }}></i>
                   </div>
                 </div>
+
+                {/* Artists Section under Top result */}
+                {artistChannel && (
+                  <div style={{ marginTop: '24px' }}>
+                    <h2 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '16px', color: '#fff', textAlign: 'left', borderBottom: 'none', paddingBottom: 0 }}>Artists</h2>
+                    <div 
+                      style={{ 
+                        backgroundColor: '#1F1F1F', 
+                        borderRadius: '8px', 
+                        padding: '20px', 
+                        cursor: 'pointer', 
+                        transition: 'background-color 0.2s',
+                        position: 'relative',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#282828';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#1F1F1F';
+                      }}
+                      onClick={() => addToQueue(searchResults, 0)}
+                    >
+                      {/* Circular Channel Logo Frame */}
+                      <div style={{ 
+                        width: '92px', 
+                        height: '92px', 
+                        borderRadius: '50%', 
+                        overflow: 'hidden', 
+                        marginBottom: '16px', 
+                        boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                        backgroundColor: '#282828',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <img 
+                          src={artistChannel.thumbnailUrl} 
+                          alt={artistChannel.name} 
+                          style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} 
+                        />
+                      </div>
+
+                      <h3 style={{ 
+                        fontSize: '26px', 
+                        fontWeight: 'bold', 
+                        color: '#fff', 
+                        margin: '0 0 8px 0', 
+                        whiteSpace: 'nowrap', 
+                        overflow: 'hidden', 
+                        textOverflow: 'ellipsis', 
+                        letterSpacing: '-0.5px',
+                        maxWidth: '100%'
+                      }}>
+                        {artistChannel.name}
+                      </h3>
+
+                      <div style={{ fontSize: '14px', color: '#b3b3b3', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ 
+                          backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+                          padding: '2px 8px', 
+                          borderRadius: '12px', 
+                          fontSize: '12px', 
+                          fontWeight: '500', 
+                          color: '#fff' 
+                        }}>
+                          Artist
+                        </span>
+                        {artistChannel.subscriberCount > 0 && (
+                          <span>• {formatSubscriberCount(artistChannel.subscriberCount)}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Right Column: Songs List */}
               <div style={{ flex: '2 1 400px' }}>
                 <h2 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '16px', color: '#fff', textAlign: 'left', borderBottom: 'none', paddingBottom: 0 }}>Songs</h2>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {searchResults.slice(0, 4).map((item, index) => (
+                  {searchResults.slice(0, 15).map((item, index) => (
                     <div 
                       key={item.id || index}
                       style={{ 
@@ -165,12 +263,58 @@ const SearchPage = () => {
                         </div>
                       </div>
 
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', color: '#b3b3b3', fontSize: '14px' }}>
-                        <button style={{ background: 'none', border: 'none', color: '#b3b3b3', cursor: 'pointer', padding: 0, fontSize: '16px' }}>
-                          <i className="bi bi-plus-circle"></i>
-                        </button>
-                        <span>3:00</span>
-                        <button style={{ background: 'none', border: 'none', color: '#b3b3b3', cursor: 'pointer', padding: 0, fontSize: '16px', letterSpacing: '2px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', color: '#b3b3b3', fontSize: '14px', marginLeft: 'auto', flexShrink: 0 }}>
+                        {/* Grouped + button and song duration */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <button 
+                            style={{ 
+                              background: 'none', 
+                              border: 'none', 
+                              color: '#b3b3b3', 
+                              cursor: 'pointer', 
+                              padding: '2px', 
+                              fontSize: '16px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              transition: 'color 0.2s ease'
+                            }}
+                            title="Add to queue"
+                            onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                            onMouseLeave={(e) => e.currentTarget.style.color = '#b3b3b3'}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addSongToQueue(item);
+                            }}
+                          >
+                            <i className="bi bi-plus-circle"></i>
+                          </button>
+                          <span style={{ 
+                            fontSize: '13px', 
+                            color: 'rgba(255, 255, 255, 0.75)', 
+                            fontVariantNumeric: 'tabular-nums',
+                            minWidth: '36px',
+                            textAlign: 'right'
+                          }}>
+                            {formatDuration(item.duration)}
+                          </span>
+                        </div>
+
+                        <button 
+                          style={{ 
+                            background: 'none', 
+                            border: 'none', 
+                            color: '#b3b3b3', 
+                            cursor: 'pointer', 
+                            padding: '2px', 
+                            fontSize: '16px', 
+                            letterSpacing: '2px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            transition: 'color 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
+                          onMouseLeave={(e) => e.currentTarget.style.color = '#b3b3b3'}
+                        >
                           ...
                         </button>
                       </div>

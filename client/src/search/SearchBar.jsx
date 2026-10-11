@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { filterAndSortByViews } from './resultFilter';
 
 const SearchBar = ({ onSearchResults }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -16,12 +17,16 @@ const SearchBar = ({ onSearchResults }) => {
         throw new Error('Network response was not ok');
       }
       
-      const data = await response.json();
-      console.log('Search results received:', data);
+      const rawData = await response.json();
+      console.log('[SearchBar] Raw results received:', rawData);
       
-      // Pass the mapped data up to the parent component
+      // Feed results to resultFilter.jsx to sort by high view count in descending order
+      const filteredData = filterAndSortByViews(rawData);
+      console.log('[resultFilter] Filtered/sorted results:', filteredData);
+      
+      // Give the filtered results back to SearchPage
       if (onSearchResults) {
-        onSearchResults(data);
+        onSearchResults(filteredData);
       }
     } catch (error) {
       console.error('Error fetching search results:', error);
@@ -30,6 +35,9 @@ const SearchBar = ({ onSearchResults }) => {
 
   const clearSearch = () => {
     setSearchQuery('');
+    if (onSearchResults) {
+      onSearchResults(null);
+    }
   };
 
   return (

@@ -5,7 +5,7 @@ export const QueueContext = createContext();
 
 export const QueueProvider = ({ children }) => {
   const [queue, setQueue] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [playedHistory, setPlayedHistory] = useState([]);
   
   const [isRepeat, setIsRepeat] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
@@ -24,123 +24,151 @@ export const QueueProvider = ({ children }) => {
     });
   };
 
-  const { playTrack } = usePlayback();
+  const { playTrack, currentTrack, currentTime, seekTo } = usePlayback();
 
-  // addToQueue can take a single track or an array of tracks
-  const addToQueue = (tracks, startIndex = 0) => {
-    const newQueue = Array.isArray(tracks) ? tracks : [tracks];
-    setQueue(newQueue);
-    setCurrentIndex(startIndex);
-    if (newQueue[startIndex]) {
-      playTrack(newQueue[startIndex]);
-    }
-  };
+  /**
+   * Adds a song to the bottom of the existing queue.
+   * If nothing is currently playing, begins playing immediately.
+   * If a song is currently playing, appends to the bottom of the queue without interrupting.
+   */
+  const addSongToQueue = (track) => {
+    const item = Array.isArray(track) ? track[0] : track;
+    if (!item) return;
 
-  const nextTrack = () => {
-    if (queue.length === 0) return;
-
-    if (isRepeat) {
-      // Replay the current track
-      playTrack(queue[currentIndex]);
+    if (!currentTrack) {
+      playTrack(item);
       return;
     }
 
-    if (isShuffle) {
-      // Pick a random track from the entire queue
-      let randomIndex = Math.floor(Math.random() * queue.length);
-      // Avoid playing the exact same song if there's more than 1 in the queue
-      if (randomIndex === currentIndex && queue.length > 1) {
-        randomIndex = (randomIndex + 1) % queue.length;
+    setQueue(prevQueue => [...prevQueue, item]);
+  };
+
+  /**
+   * Plays a list of tracks starting from startIndex, and loads the rest as upcoming queue.
+   */
+  const playQueue = (tracks, startIndex = 0) => {
+    const list = Array.isArray(tracks) ? tracks : [tracks];
+    const targetTrack = list[startIndex];
+    if (targetTrack) {
+      if (currentTrack) {
+        setPlayedHistory(prev => [...prev, currentTrack]);
       }
-      
+      playTrack(targetTrack);
+    }
+    const upcoming = list.slice(startIndex + 1);
+    setQueue(upcoming);
+  };
+
+  /**
+   * Smart addToQueue:
+   * - When adding a single track (e.g. from the '+' button) and a song is playing,
+   *   it appends the song to the bottom of the existing queue.
+   * - When playing a playlist/search list with multiple tracks, it plays starting at startIndex.
+   */
+  const addToQueue = (tracks, startIndex = undefined) => {
+    const isSingleTrack = !Array.isArray(tracks) || tracks.length === 1;
+    if (isSingleTrack && currentTrack && (startIndex === undefined || startIndex === 0)) {
+      addSongToQueue(Array.isArray(tracks) ? tracks[0] : tracks);
+      return;
+    }
+    playQueue(tracks, startIndex !== undefined ? startIndex : 0);
+  };
+
+  /**
+   * Plays the next track:
+   * - When shuffle is ON: randomly picks a song from the queue, and ONLY that song disappears from the queue.
+   * - When shuffle is OFF: plays the next song sequentially from the top of the queue.
+   */
+  const nextTrack = () => {
+    if (isRepeat && currentTrack) {
+      seekTo(0);
+      playTrack(currentTrack);
+      return;
+    }
+
+    if (queue.length === 0) return;
+
+    if (isShuffle) {
+      // Pick a random track from the queue
+      const randomIndex = Math.floor(Math.random() * queue.length);
       const nextSong = queue[randomIndex];
-      
-      setQueue(prevQueue => {
-        const newQueue = [...prevQueue];
-        // Remove the randomly picked song from its old position
-        newQueue.splice(randomIndex, 1);
-        
-        // Find where the current playing song is now
-        const activeIndex = randomIndex < currentIndex ? currentIndex - 1 : currentIndex;
-        
-        // Insert the picked song exactly after the currently playing song
-        newQueue.splice(activeIndex + 1, 0, nextSong);
-        return newQueue;
-      });
-      
-      // Update currentIndex to point to the newly inserted track
-      const newCurrentIndex = (randomIndex < currentIndex ? currentIndex - 1 : currentIndex) + 1;
-      setCurrentIndex(newCurrentIndex);
+      if (!nextSong) return;
+
+      // Only the picked song disappears from the queue
+      setQueue(prevQueue => prevQueue.filter((_, i) => i !== randomIndex));
+
+      if (currentTrack) {
+        setPlayedHistory(prev => [...prev, currentTrack]);
+      }
+
       playTrack(nextSong);
       return;
     }
 
-    // Default: play the next song in the queue sequentially
-    if (currentIndex < queue.length - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
-      playTrack(queue[nextIndex]);
+    // Sequential playback
+    const nextSong = queue[0];
+    if (!nextSong) return;
+
+    setQueue(prevQueue => prevQueue.slice(1));
+
+    if (currentTrack) {
+      setPlayedHistory(prev => [...prev, currentTrack]);
     }
+
+    playTrack(nextSong);
   };
 
+  /**
+   * Plays the previous track or restarts the current track if > 3 seconds in.
+   */
   const previousTrack = () => {
-    if (queue.length === 0) return;
-
-    if (isRepeat) {
-      playTrack(queue[currentIndex]);
+    if (currentTime > 3) {
+      seekTo(0);
       return;
     }
 
-    if (isShuffle) {
-      let randomIndex = Math.floor(Math.random() * queue.length);
-      if (randomIndex === currentIndex && queue.length > 1) {
-        randomIndex = (randomIndex + 1) % queue.length;
+    if (isRepeat && currentTrack) {
+      seekTo(0);
+      playTrack(currentTrack);
+      return;
+    }
+
+    if (playedHistory.length > 0) {
+      const prevSong = playedHistory[playedHistory.length - 1];
+      setPlayedHistory(prev => prev.slice(0, -1));
+
+      // Put current track back at the front of the queue
+      if (currentTrack) {
+        setQueue(prev => [currentTrack, ...prev]);
       }
-      
-      const prevSong = queue[randomIndex];
-      
-      setQueue(prevQueue => {
-        const newQueue = [...prevQueue];
-        newQueue.splice(randomIndex, 1);
-        
-        const activeIndex = randomIndex < currentIndex ? currentIndex - 1 : currentIndex;
-        // Insert exactly before the currently playing song
-        newQueue.splice(activeIndex, 0, prevSong);
-        return newQueue;
-      });
-      
-      // Update currentIndex to point to the newly inserted track (which took the activeIndex's old spot)
-      const newCurrentIndex = randomIndex < currentIndex ? currentIndex - 1 : currentIndex;
-      setCurrentIndex(newCurrentIndex);
+
       playTrack(prevSong);
       return;
     }
 
-    if (currentIndex > 0) {
-      const prevIndex = currentIndex - 1;
-      setCurrentIndex(prevIndex);
-      playTrack(queue[prevIndex]);
-    } else if (currentIndex === 0) {
-      // Replay first track if previous is pressed on the first track
-      playTrack(queue[0]);
-    }
+    seekTo(0);
   };
 
-  const removeFromQueue = (indexToRemove) => {
-    setQueue(prevQueue => {
-      const newQueue = [...prevQueue];
-      newQueue.splice(indexToRemove, 1);
-      return newQueue;
-    });
+  /**
+   * Plays a selected item from the queue and removes it from the upcoming list.
+   */
+  const playQueueItem = (index) => {
+    const selectedTrack = queue[index];
+    if (!selectedTrack) return;
 
-    // If we removed a track that was BEFORE the current track,
-    // we need to decrement currentIndex to keep playing the same song.
-    if (indexToRemove < currentIndex) {
-      setCurrentIndex(prev => prev - 1);
+    if (currentTrack) {
+      setPlayedHistory(prev => [...prev, currentTrack]);
     }
-    // Note: If we remove the currently playing track, should it stop?
-    // The prompt says "currently playing song should not be in the queue" 
-    // so it won't even be displayed to be removed.
+
+    setQueue(prevQueue => prevQueue.filter((_, i) => i !== index));
+    playTrack(selectedTrack);
+  };
+
+  /**
+   * Removes a specific item from the queue.
+   */
+  const removeFromQueue = (indexToRemove) => {
+    setQueue(prevQueue => prevQueue.filter((_, i) => i !== indexToRemove));
   };
 
   const [isQueueVisible, setIsQueueVisible] = useState(false);
@@ -149,8 +177,11 @@ export const QueueProvider = ({ children }) => {
   return (
     <QueueContext.Provider value={{ 
       queue, 
-      currentIndex, 
+      currentIndex: 0, 
       addToQueue, 
+      addSongToQueue,
+      playQueue,
+      playQueueItem,
       nextTrack, 
       previousTrack,
       removeFromQueue,
@@ -174,3 +205,5 @@ export const useQueue = () => {
   }
   return context;
 };
+
+export default QueueContext;

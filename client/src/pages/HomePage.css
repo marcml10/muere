@@ -17,6 +17,11 @@
   padding: 20px;
   padding-bottom: 120px;
   overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .search-input {
@@ -45,7 +50,7 @@
 }
 
 .sidebar nav h3 {
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
   color: var(--am-text-secondary);
   margin-top: 28px;
@@ -66,9 +71,9 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-size: 14px;
-  font-weight: 200;
-  color: rgba(255, 255, 255, 0.85); /* Slightly dimmer whiteness by default */
+  font-size: 16px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9); /* Clearer text legibility */
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 
