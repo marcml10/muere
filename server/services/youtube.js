@@ -54,7 +54,7 @@ export const searchYouTube = async (query) => {
     part: 'snippet',
     q: query,
     type: 'video,channel',
-    maxResults: '35',
+    maxResults: '45',
     key: apiKey
   });
 
@@ -174,3 +174,138 @@ export const searchYouTube = async (query) => {
     throw error;
   }
 };
+
+// 8 hours in milliseconds
+const EIGHT_HOURS_MS = 8 * 60 * 60 * 1000;
+
+let trendingCache = {
+  tracks: [],
+  lastUpdated: null,
+  isFetching: false,
+};
+
+/**
+ * Fetches top trending music videos worldwide from YouTube Data API v3.
+ */
+export const fetchTrendingWorldwide = async () => {
+  const apiKey = YOUTUBE_API_KEY || process.env.YOUTUBE_API_KEY;
+  if (!apiKey) {
+    console.error("[Service: youtube.js] Error: YOUTUBE_API_KEY is not set");
+    throw new Error("Missing YouTube API key");
+  }
+
+  // Without regionCode, YouTube API returns worldwide / global trending
+  const params = new URLSearchParams({
+    part: 'snippet,contentDetails,statistics',
+    chart: 'mostPopular',
+    videoCategoryId: '10', // Music
+    maxResults: '30',
+    key: apiKey
+  });
+
+  const url = `https://www.googleapis.com/youtube/v3/videos?${params}`;
+  console.log('[Trending Service] Fetching trending music worldwide from YouTube API...');
+
+  const response = await fetch(url);
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('[Trending Service] YouTube API Error:', errorText);
+    throw new Error(`YouTube API responded with status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  const rawItems = data.items || [];
+
+  // Filter out shorts
+  const nonShorts = rawItems.filter(item => !isShortVideo(item));
+
+  const tracks = nonShorts.map(item => {
+    const durationSeconds = parseDuration(item.contentDetails?.duration);
+    return {
+      id: item.id,
+      title: item.snippet?.title || '',
+      artist: (item.snippet?.channelTitle || '').replace(/VEVO$/i, '').replace(/ - Topic$/i, '').trim(),
+      thumbnailUrl: item.snippet?.thumbnails?.high?.url || item.snippet?.thumbnails?.medium?.url || item.snippet?.thumbnails?.default?.url,
+      viewCount: parseInt(item.statistics?.viewCount || '0', 10),
+      duration: durationSeconds,
+    };
+  });
+
+  trendingCache = {
+    tracks,
+    lastUpdated: Date.now(),
+    isFetching: false,
+  };
+
+  console.log(`[Trending Service] Successfully cached ${tracks.length} worldwide trending tracks. Updated at: ${new Date(trendingCache.lastUpdated).toISOString()}`);
+  return trendingCache;
+};
+
+export const fetchTrendingIndia = fetchTrendingWorldwide;
+
+/**
+ * Returns cached trending songs worldwide.
+ * If cache is cold or expired (>8 hours), fetches fresh data.
+ */
+export const getTrendingWorldwide = async () => {
+  const isExpired = !trendingCache.lastUpdated || (Date.now() - trendingCache.lastUpdated > EIGHT_HOURS_MS);
+
+  if (trendingCache.tracks.length > 0 && !isExpired) {
+    return {
+      tracks: trendingCache.tracks,
+      lastUpdated: trendingCache.lastUpdated,
+    };
+  }
+
+  if (trendingCache.isFetching && trendingCache.tracks.length > 0) {
+    return {
+      tracks: trendingCache.tracks,
+      lastUpdated: trendingCache.lastUpdated,
+    };
+  }
+
+  trendingCache.isFetching = true;
+  try {
+    const updated = await fetchTrendingWorldwide();
+    return {
+      tracks: updated.tracks,
+      lastUpdated: updated.lastUpdated,
+    };
+  } catch (err) {
+    trendingCache.isFetching = false;
+    if (trendingCache.tracks.length > 0) {
+      console.warn('[Trending Service] Failed to refresh trending, returning stale cache:', err.message);
+      return {
+        tracks: trendingCache.tracks,
+        lastUpdated: trendingCache.lastUpdated,
+      };
+    }
+    throw err;
+  }
+};
+
+export const getTrendingIndia = getTrendingWorldwide;
+export const getTrending = getTrendingWorldwide;
+
+/**
+ * Initializes the independent 8-hour background scheduler.
+ */
+export const initTrendingScheduler = () => {
+  console.log('[Trending Service] Initializing independent 8-hour worldwide trending scheduler...');
+  
+  // Initial fetch on server start
+  getTrendingWorldwide().catch(err => {
+    console.error('[Trending Service] Initial trending fetch failed:', err.message);
+  });
+
+  // Recurring trigger every 8 hours
+  setInterval(async () => {
+    console.log('[Trending Service] 8-hour interval triggered. Refreshing trending songs worldwide...');
+    try {
+      await fetchTrendingWorldwide();
+    } catch (err) {
+      console.error('[Trending Service] Scheduled refresh failed:', err.message);
+    }
+  }, EIGHT_HOURS_MS);
+};
+

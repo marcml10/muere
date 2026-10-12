@@ -1,6 +1,8 @@
 import express from "express";
 import youtubeRoutes from "./routes/youtube.js";
+import { initTrendingScheduler } from "./services/youtube.js";
 import "dotenv/config";
+import "./database/database.js";
 
 const app = express();
 const PORT = 3000;
@@ -19,4 +21,6 @@ app.use("/api", youtubeRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+  // Start the independent 8-hour trending scheduler
+  initTrendingScheduler();
 });

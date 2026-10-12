@@ -1,5 +1,5 @@
 import express from 'express';
-import { searchYouTube } from '../services/youtube.js';
+import { searchYouTube, getTrendingIndia } from '../services/youtube.js';
 
 const router = express.Router();
 
@@ -20,6 +20,16 @@ router.get('/search', async (req, res) => {
   } catch (error) {
     console.error("Error in /api/search route:", error);
     res.status(500).json({ error: "Failed to perform search" });
+  }
+});
+
+router.get('/trending', async (req, res) => {
+  try {
+    const data = await getTrendingIndia();
+    res.json(data);
+  } catch (error) {
+    console.error("Error in /api/trending route:", error);
+    res.status(500).json({ error: "Failed to fetch trending songs" });
   }
 });
 
