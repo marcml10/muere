@@ -1,22 +1,42 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useRef } from 'react';
 import { HistoryContext } from './HistoryContext';
 import historyStorage from './historyStorage';
 
 // Create a Context for the playback state
 export const PlaybackContext = createContext();
 
+const PLAYBACK_STORAGE_KEY = 'muer_playback_state';
+const readSavedPlayback = () => {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PLAYBACK_STORAGE_KEY) || 'null');
+    return saved && typeof saved === 'object' ? saved : {};
+  } catch {
+    return {};
+  }
+};
+
 // Create a Provider component that holds the state
 export const PlaybackProvider = ({ children }) => {
-  const [currentTrack, setCurrentTrack] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [savedPlayback] = useState(readSavedPlayback);
+  const [currentTrack, setCurrentTrack] = useState(() => savedPlayback.currentTrack || null);
+  const [isPlaying, setIsPlaying] = useState(() => Boolean(savedPlayback.currentTrack && savedPlayback.isPlaying));
+  const [currentTime, setCurrentTime] = useState(() => Number(savedPlayback.currentTime) || 0);
   const [duration, setDuration] = useState(0);
   const [seekToTime, setSeekToTime] = useState(null);
+  const sleepTimerRef = useRef(null);
 
   const [volume, setVolume] = useState(100);
   const [prevVolume, setPrevVolume] = useState(100);
 
   const historyContext = useContext(HistoryContext);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(PLAYBACK_STORAGE_KEY, JSON.stringify({ currentTrack, isPlaying, currentTime }));
+    } catch (error) {
+      console.error('[Playback] Failed to save playback state:', error);
+    }
+  }, [currentTrack, isPlaying, currentTime]);
 
   // Synchronize playback track info to HistoryContext and historyStorage
   useEffect(() => {
@@ -66,6 +86,18 @@ export const PlaybackProvider = ({ children }) => {
     }
   };
 
+  const startSleepTimer = (minutes) => {
+    if (sleepTimerRef.current) clearTimeout(sleepTimerRef.current);
+    sleepTimerRef.current = setTimeout(() => {
+      setIsPlaying(false);
+      sleepTimerRef.current = null;
+    }, minutes * 60 * 1000);
+  };
+
+  useEffect(() => () => {
+    if (sleepTimerRef.current) clearTimeout(sleepTimerRef.current);
+  }, []);
+
   // Trigger a seek operation (youtubePlayer will listen to this)
   const seekTo = (time) => {
     setSeekToTime(time);
@@ -78,6 +110,7 @@ export const PlaybackProvider = ({ children }) => {
       isPlaying, 
       playTrack, 
       togglePlayPause,
+      startSleepTimer,
       currentTime,
       setCurrentTime,
       duration,

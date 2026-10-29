@@ -3,7 +3,7 @@ import { usePlayback } from './playBack';
 import { useQueue } from './QueueContext';
 
 const YoutubePlayer = () => {
-  const { currentTrack, isPlaying, setCurrentTime, setDuration, seekToTime, setSeekToTime, volume } = usePlayback();
+  const { currentTrack, isPlaying, currentTime, setCurrentTime, setDuration, seekToTime, setSeekToTime, volume } = usePlayback();
   const { nextTrack } = useQueue();
   const playerRef = useRef(null);
   const nextTrackRef = useRef(nextTrack);
@@ -55,6 +55,9 @@ const YoutubePlayer = () => {
         events: {
           onReady: (event) => {
             setPlayerLoaded(true);
+            if (currentTime > 0) {
+              event.target.seekTo(currentTime, true);
+            }
             if (isPlaying) {
               event.target.playVideo();
             }

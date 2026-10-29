@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useState, useContext } from 'react';
 import { usePlayback } from './playBack';
 
 export const QueueContext = createContext();
@@ -165,7 +166,42 @@ export const QueueProvider = ({ children }) => {
   };
 
   /**
-   * Removes a specific item from the queue.
+   * Checks whether a track is upcoming in the queue. The current track is not queued.
+   */
+  const isQueued = (trackId) => {
+    if (!trackId) return false;
+    if (currentTrack?.id === trackId) return false;
+    return queue.some(item => item.id === trackId);
+  };
+
+  /**
+   * Removes a track by ID from the queue.
+   */
+  const removeFromQueueByTrackId = (trackId) => {
+    if (!trackId) return;
+    setQueue(prevQueue => prevQueue.filter(t => t.id !== trackId));
+  };
+
+  /**
+   * Toggles a track in the queue.
+   * If already in queue, removes it.
+   * If not in queue, adds it.
+   */
+  const toggleSongInQueue = (track) => {
+    const item = Array.isArray(track) ? track[0] : track;
+    if (!item || !item.id) return;
+    if (currentTrack?.id === item.id) return;
+
+    const inQueue = queue.some(t => t.id === item.id);
+    if (inQueue) {
+      removeFromQueueByTrackId(item.id);
+    } else {
+      addSongToQueue(item);
+    }
+  };
+
+  /**
+   * Removes a specific item from the queue by index.
    */
   const removeFromQueue = (indexToRemove) => {
     setQueue(prevQueue => prevQueue.filter((_, i) => i !== indexToRemove));
@@ -180,6 +216,9 @@ export const QueueProvider = ({ children }) => {
       currentIndex: 0, 
       addToQueue, 
       addSongToQueue,
+      toggleSongInQueue,
+      isQueued,
+      removeFromQueueByTrackId,
       playQueue,
       playQueueItem,
       nextTrack, 

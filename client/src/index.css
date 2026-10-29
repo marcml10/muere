@@ -7,8 +7,8 @@
   --am-border: #333333;
   --am-player-bg: rgba(31, 31, 31, 0.85);
   --am-hover: #2c2c2e;
-  --font-display: "Google Sans", "Product Sans", Roboto, sans-serif;
-  --font-text: "Google Sans", "Product Sans", Roboto, sans-serif;
+  --font-display: "Inter Variable", Inter, sans-serif;
+  --font-text: "Inter Variable", Inter, sans-serif;
 }
 
 body {

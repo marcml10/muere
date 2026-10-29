@@ -1,15 +1,46 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { usePlayback } from '../playback/playBack';
 import { useQueue } from '../playback/QueueContext';
+import { useLiked } from '../playback/LikedContext';
 
-const PlayerBar = () => {
+const SeekBackward10Icon = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5" />
+    <text x="12" y="15.5" fontSize="8.5" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fill="currentColor" stroke="none" textAnchor="middle">10</text>
+  </svg>
+);
+
+const SeekForward10Icon = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'block' }}>
+    <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.85.99 6.74 2.74L21 8" />
+    <path d="M21 3v5h-5" />
+    <text x="12" y="15.5" fontSize="8.5" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="700" fill="currentColor" stroke="none" textAnchor="middle">10</text>
+  </svg>
+);
+
+const PlayerBar = ({ onOpenCurrentSong }) => {
   const { currentTrack, isPlaying, togglePlayPause, currentTime, duration, seekTo, volume, setVolume, toggleMute } = usePlayback();
   const { nextTrack, previousTrack, isQueueVisible, toggleQueue, isRepeat, isShuffle, toggleRepeat, toggleShuffle } = useQueue();
+  const { isLiked, toggleLike } = useLiked();
+
+  const isCurrentTrackLiked = Boolean(currentTrack && isLiked(currentTrack.id));
 
   const [showVolume, setShowVolume] = useState(false);
 
   const handleSeek = (e) => {
     seekTo(parseFloat(e.target.value));
+  };
+
+  const handleSeekBackward10 = () => {
+    seekTo(Math.max(0, (currentTime || 0) - 10));
+  };
+
+  const handleSeekForward10 = () => {
+    const effectiveDuration = (Number.isFinite(duration) && duration > 0)
+      ? duration
+      : (Number(currentTrack?.duration) > 0 ? Number(currentTrack.duration) : Infinity);
+    seekTo(Math.min(effectiveDuration, (currentTime || 0) + 10));
   };
 
   const formatTime = (time) => {
@@ -23,36 +54,50 @@ const PlayerBar = () => {
     <footer className="player-bar">
       {/* Left: Transport Controls */}
       <div className="dock-controls">
-        <button className="dock-btn" onClick={toggleShuffle} style={{ fontSize: '14px', color: isShuffle ? '#fa243c' : '' }}>
+        <button className="dock-btn" onClick={toggleShuffle} title="Shuffle" aria-label="Toggle shuffle" style={{ fontSize: '20px', color: isShuffle ? '#fa243c' : 'rgba(255, 255, 255, 0.7)' }}>
           <i className="bi bi-shuffle"></i>
         </button>
-        <button className="dock-btn" onClick={previousTrack} style={{ fontSize: '19px', color: '#fff' }}>
+        <button className="dock-btn" onClick={handleSeekBackward10} title="Seek 10 seconds backward" aria-label="Seek 10 seconds backward" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+          <SeekBackward10Icon size={20} />
+        </button>
+        <button className="dock-btn" onClick={previousTrack} title="Previous track" aria-label="Previous track" style={{ fontSize: '23px', color: '#fff' }}>
           <i className="bi bi-rewind-fill"></i>
         </button>
-        <button className="dock-btn" onClick={togglePlayPause} style={{ fontSize: '31px', margin: '0 -4px', color: '#fff' }}>
+        <button className="dock-btn" onClick={togglePlayPause} title={isPlaying ? "Pause" : "Play"} aria-label={isPlaying ? "Pause" : "Play"} style={{ fontSize: '33px', margin: '0 -2px', color: '#fff' }}>
           {isPlaying ? (
             <i className="bi bi-pause-fill"></i>
           ) : (
             <i className="bi bi-play-fill"></i>
           )}
         </button>
-        <button className="dock-btn" onClick={nextTrack} style={{ fontSize: '19px', color: '#fff' }}>
+        <button className="dock-btn" onClick={nextTrack} title="Next track" aria-label="Next track" style={{ fontSize: '23px', color: '#fff' }}>
           <i className="bi bi-fast-forward-fill"></i>
         </button>
-        <button className="dock-btn" onClick={toggleRepeat} style={{ fontSize: '14px', color: isRepeat ? '#fa243c' : '' }}>
+        <button className="dock-btn" onClick={handleSeekForward10} title="Seek 10 seconds forward" aria-label="Seek 10 seconds forward" style={{ color: 'rgba(255, 255, 255, 0.85)' }}>
+          <SeekForward10Icon size={20} />
+        </button>
+        <button className="dock-btn" onClick={toggleRepeat} title="Repeat" aria-label="Toggle repeat" style={{ fontSize: '20px', color: isRepeat ? '#fa243c' : 'rgba(255, 255, 255, 0.7)' }}>
           <i className="bi bi-repeat"></i>
         </button>
       </div>
 
       {/* Center: Album Art + Track Info */}
       <div className="dock-track">
-        <div className="dock-art" style={{ transform: 'translateY(-2px)' }}>
+        <button
+          type="button"
+          className="dock-art"
+          onClick={onOpenCurrentSong}
+          disabled={!currentTrack}
+          aria-label="Open current song"
+          title={currentTrack ? 'Open current song' : 'Nothing is playing'}
+          style={{ transform: 'translateY(-2px)', border: 0, padding: 0, cursor: currentTrack ? 'pointer' : 'default' }}
+        >
           {currentTrack?.thumbnailUrl ? (
             <img src={currentTrack.thumbnailUrl} alt={currentTrack.title} />
           ) : (
             <span style={{ fontSize: '16px' }}>🎵</span>
           )}
-        </div>
+        </button>
         <div className="dock-info" style={{ transform: 'translateY(-2px)' }}>
           <span className="dock-title">
             {currentTrack ? currentTrack.title : 'Not Playing'}
@@ -95,6 +140,39 @@ const PlayerBar = () => {
 
       {/* Right: Actions */}
       <div className="dock-actions">
+        {/* Like / Heart icon */}
+        <button
+          type="button"
+          className="dock-btn"
+          onClick={() => currentTrack && toggleLike(currentTrack)}
+          disabled={!currentTrack}
+          title={!currentTrack ? 'No song playing' : (isCurrentTrackLiked ? 'Unlike' : 'Like')}
+          aria-label={!currentTrack ? 'Like' : (isCurrentTrackLiked ? `Unlike ${currentTrack.title || 'song'}` : `Like ${currentTrack.title || 'song'}`)}
+          style={{
+            fontSize: '17px',
+            color: isCurrentTrackLiked ? '#ff2d55' : 'rgba(255, 255, 255, 0.7)',
+            transition: 'all 0.3s ease, transform 0.15s ease',
+            filter: showVolume ? 'blur(8px)' : 'none',
+            opacity: showVolume ? 0 : (!currentTrack ? 0.35 : 1),
+            pointerEvents: (showVolume || !currentTrack) ? 'none' : 'auto',
+            cursor: currentTrack ? 'pointer' : 'default'
+          }}
+          onMouseEnter={(e) => {
+            if (currentTrack) {
+              if (!isCurrentTrackLiked) e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.transform = 'scale(1.15)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (currentTrack) {
+              e.currentTarget.style.color = isCurrentTrackLiked ? '#ff2d55' : 'rgba(255, 255, 255, 0.7)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }
+          }}
+        >
+          <i className={isCurrentTrackLiked ? 'bi bi-heart-fill' : 'bi bi-heart'} />
+        </button>
+
         {/* Queue icon */}
         <button 
           className="dock-btn" 

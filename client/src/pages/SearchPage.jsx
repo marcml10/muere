@@ -1,26 +1,77 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQueue } from '../playback/QueueContext';
+import { useLiked } from '../playback/LikedContext';
+import { usePlayback } from '../playback/playBack';
 import SearchBar from '../search/SearchBar';
 import { formatViewCount, formatDuration, formatSubscriberCount } from '../search/resultFilter';
 
 const SearchPage = () => {
-  const { addToQueue, addSongToQueue } = useQueue();
-  const [searchResults, setSearchResults] = useState(null);
-  const [artistChannel, setArtistChannel] = useState(null);
+  const { addToQueue, toggleSongInQueue, isQueued } = useQueue();
+  const { isLiked, toggleLike } = useLiked();
+  const { startSleepTimer } = usePlayback();
+  const [savedSearch] = useState(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('muer_last_search_results') || 'null');
+      return saved && Array.isArray(saved.tracks) ? saved : null;
+    } catch {
+      return null;
+    }
+  });
+  const [searchResults, setSearchResults] = useState(() => savedSearch?.tracks || null);
+  const [artistChannel, setArtistChannel] = useState(() => savedSearch?.channel || null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [openMenuId, setOpenMenuId] = useState(null);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
+  const [songInfo, setSongInfo] = useState(null);
+  const [playlistFolders, setPlaylistFolders] = useState(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem('muer_playlist_folders') || '[]');
+      return Array.isArray(stored) ? stored : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const addSongToPlaylist = (folderId, song) => {
+    const updatedFolders = playlistFolders.map((folder) => {
+      if (folder.id !== folderId) return folder;
+      const songs = Array.isArray(folder.songs) ? folder.songs : [];
+      return songs.some((entry) => entry.id === song.id) ? folder : { ...folder, songs: [...songs, song] };
+    });
+    setPlaylistFolders(updatedFolders);
+    localStorage.setItem('muer_playlist_folders', JSON.stringify(updatedFolders));
+    setOpenMenuId(null);
+    setOpenSubmenu(null);
+  };
 
   const handleSearchResults = (data) => {
     if (!data) {
       setSearchResults(null);
       setArtistChannel(null);
+      try {
+        localStorage.removeItem('muer_last_search_results');
+      } catch (error) {
+        console.error('Failed to clear saved search results:', error);
+      }
       return;
     }
     if (Array.isArray(data)) {
       setSearchResults(data);
       setArtistChannel(null);
+      try {
+        localStorage.setItem('muer_last_search_results', JSON.stringify({ tracks: data, channel: null }));
+      } catch (error) {
+        console.error('Failed to save search results:', error);
+      }
     } else if (typeof data === 'object') {
       const tracks = Array.isArray(data.tracks) ? data.tracks : (Array.isArray(data.results) ? data.results : []);
       setSearchResults(tracks);
       setArtistChannel(data.channel || null);
+      try {
+        localStorage.setItem('muer_last_search_results', JSON.stringify({ tracks, channel: data.channel || null }));
+      } catch (error) {
+        console.error('Failed to save search results:', error);
+      }
     }
   };
 
@@ -40,22 +91,47 @@ const SearchPage = () => {
           transition: 'max-width 0.3s ease', 
           margin: '0 auto' 
         }}>
-          <SearchBar onSearchResults={handleSearchResults} />
+          <SearchBar onSearchResults={handleSearchResults} onLoadingChange={setIsLoading} />
         </div>
       </header>
       
       <section className="top-picks">
-        {!searchResults && (
-          <h2 style={{ textAlign: 'left', marginBottom: '30px' }}>
-            Browse Categories
-          </h2>
-        )}
-        
-        <div className={searchResults ? "" : "category-grid"}>
+        {isLoading ? (
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            minHeight: '360px', 
+            gap: '18px' 
+          }}>
+            <div 
+              style={{ 
+                width: '42px', 
+                height: '42px', 
+                border: '3px solid rgba(255, 255, 255, 0.15)', 
+                borderTopColor: '#fff', 
+                borderRadius: '50%', 
+                animation: 'spin 0.8s linear infinite' 
+              }} 
+            />
+            <span style={{ color: 'var(--am-text-secondary)', fontSize: '15px', letterSpacing: '0.2px' }}>
+              Searching...
+            </span>
+          </div>
+        ) : (
+          <>
+            {!searchResults && (
+              <h2 style={{ textAlign: 'left', marginBottom: '30px' }}>
+                Browse Categories
+              </h2>
+            )}
+            
+            <div className={searchResults ? "" : "category-grid"}>
           {searchResults && searchResults.length > 0 ? (
-            <div className="spotify-search-layout" style={{ display: 'flex', gap: '24px', width: '100%', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-              {/* Left Column: Top Result */}
-              <div style={{ flex: '1 1 350px', maxWidth: '450px', position: 'sticky', top: '20px' }}>
+            <div className="spotify-search-layout" style={{ display: 'grid', gridTemplateColumns: 'minmax(320px, 380px) minmax(0, 1fr)', gap: '32px', width: '100%', alignItems: 'flex-start' }}>
+              {/* Left Column: Top Result & Artist */}
+              <div style={{ width: '100%', minWidth: 0, position: 'sticky', top: '20px' }}>
                 <h2 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '16px', color: '#fff', textAlign: 'left', borderBottom: 'none', paddingBottom: 0 }}>Top result</h2>
                 <div 
                   style={{ 
@@ -83,9 +159,9 @@ const SearchPage = () => {
                   <img 
                     src={searchResults[0].thumbnailUrl} 
                     alt={searchResults[0].title} 
-                    style={{ width: '92px', height: '92px', borderRadius: '4px', objectFit: 'cover', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}
+                    style={{ width: '164px', height: '92px', borderRadius: '4px', objectFit: 'cover', marginBottom: '20px', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}
                   />
-                  <h3 style={{ fontSize: '32px', fontWeight: 'bold', color: '#fff', margin: '0 0 8px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', letterSpacing: '-0.5px' }}>
+                  <h3 style={{ fontSize: '32px', fontWeight: 400, color: '#fff', margin: '0 0 8px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', letterSpacing: '-0.5px' }}>
                     {searchResults[0].title}
                   </h3>
                   <div style={{ fontSize: '14px', color: '#b3b3b3', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -201,10 +277,10 @@ const SearchPage = () => {
               </div>
 
               {/* Right Column: Songs List */}
-              <div style={{ flex: '2 1 400px' }}>
+              <div style={{ width: '100%', minWidth: 0 }}>
                 <h2 style={{ fontSize: '22px', fontWeight: 'bold', marginBottom: '16px', color: '#fff', textAlign: 'left', borderBottom: 'none', paddingBottom: 0 }}>Songs</h2>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                  {searchResults.slice(0, 15).map((item, index) => (
+                  {searchResults.slice(0, 20).map((item, index) => (
                     <div 
                       key={item.id || index}
                       style={{ 
@@ -228,7 +304,7 @@ const SearchPage = () => {
                       }}
                       onClick={() => addToQueue(searchResults, index)}
                     >
-                      <div style={{ position: 'relative', width: '40px', height: '40px', flexShrink: 0 }}>
+                      <div style={{ position: 'relative', width: '72px', height: '40px', flexShrink: 0, overflow: 'hidden', borderRadius: '4px' }}>
                         <img 
                           src={item.thumbnailUrl} 
                           alt={item.title} 
@@ -255,7 +331,7 @@ const SearchPage = () => {
                       </div>
                       
                       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'left' }}>
-                        <div style={{ color: '#fff', fontSize: '16px', fontWeight: 'normal', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <div style={{ color: '#fff', fontSize: '16px', fontWeight: 400, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {item.title}
                         </div>
                         <div style={{ color: '#b3b3b3', fontSize: '14px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -264,30 +340,37 @@ const SearchPage = () => {
                       </div>
 
                       <div style={{ display: 'flex', alignItems: 'center', gap: '20px', color: '#b3b3b3', fontSize: '14px', marginLeft: 'auto', flexShrink: 0 }}>
-                        {/* Grouped + button and song duration */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        {/* Grouped Like button, + button, and song duration */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                           <button 
                             style={{ 
                               background: 'none', 
                               border: 'none', 
-                              color: '#b3b3b3', 
+                              color: isLiked(item.id) ? '#ff2d55' : '#b3b3b3', 
                               cursor: 'pointer', 
                               padding: '2px', 
                               fontSize: '16px',
                               display: 'flex',
                               alignItems: 'center',
-                              transition: 'color 0.2s ease'
+                              transition: 'color 0.2s ease, transform 0.15s ease'
                             }}
-                            title="Add to queue"
-                            onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = '#b3b3b3'}
+                            title={isLiked(item.id) ? "Unlike" : "Like"}
+                            onMouseEnter={(e) => {
+                              if (!isLiked(item.id)) e.currentTarget.style.color = '#fff';
+                              e.currentTarget.style.transform = 'scale(1.15)';
+                            }}
+                            onMouseLeave={(e) => {
+                              if (!isLiked(item.id)) e.currentTarget.style.color = '#b3b3b3';
+                              e.currentTarget.style.transform = 'scale(1)';
+                            }}
                             onClick={(e) => {
                               e.stopPropagation();
-                              addSongToQueue(item);
+                              toggleLike(item);
                             }}
                           >
-                            <i className="bi bi-plus-circle"></i>
+                            <i className={isLiked(item.id) ? "bi bi-heart-fill" : "bi bi-heart"}></i>
                           </button>
+
                           <span style={{ 
                             fontSize: '13px', 
                             color: 'rgba(255, 255, 255, 0.75)', 
@@ -299,24 +382,83 @@ const SearchPage = () => {
                           </span>
                         </div>
 
-                        <button 
-                          style={{ 
-                            background: 'none', 
-                            border: 'none', 
-                            color: '#b3b3b3', 
-                            cursor: 'pointer', 
-                            padding: '2px', 
-                            fontSize: '16px', 
-                            letterSpacing: '2px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            transition: 'color 0.2s ease'
-                          }}
-                          onMouseEnter={(e) => e.currentTarget.style.color = '#fff'}
-                          onMouseLeave={(e) => e.currentTarget.style.color = '#b3b3b3'}
-                        >
-                          ...
-                        </button>
+                        <div style={{ position: 'relative' }}>
+                          <button
+                            type="button"
+                            aria-label={`More options for ${item.title}`}
+                            title="More options"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              setOpenMenuId(openMenuId === item.id ? null : item.id);
+                              setOpenSubmenu(null);
+                            }}
+                            style={{ background: 'none', border: 'none', color: '#b3b3b3', cursor: 'pointer', padding: '4px', fontSize: '18px', display: 'flex', alignItems: 'center' }}
+                          >
+                            <i className="bi bi-three-dots-vertical" />
+                          </button>
+                          {openMenuId === item.id && (
+                            <div
+                              onClick={(event) => event.stopPropagation()}
+                              onMouseLeave={() => { setOpenMenuId(null); setOpenSubmenu(null); }}
+                              style={{ position: 'absolute', top: '30px', right: 0, zIndex: 30, width: '240px', padding: '8px', background: 'rgba(255, 255, 255, 0.07)', backdropFilter: 'blur(75px) saturate(180%)', WebkitBackdropFilter: 'blur(75px) saturate(180%)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '28px', boxShadow: '0 8px 32px rgba(0,0,0,0.6)' }}
+                            >
+                              <button type="button" onClick={() => setOpenSubmenu(openSubmenu === 'playlist' ? null : 'playlist')} style={menuItemStyle}>
+                                <i className="bi bi-music-note-list" /> Add to playlist <i className="bi bi-chevron-right" style={{ marginLeft: 'auto' }} />
+                              </button>
+                              {openSubmenu === 'playlist' && (
+                                <div style={{ maxHeight: '180px', overflowY: 'auto', margin: '2px 0 6px', paddingLeft: '8px', borderLeft: '1px solid rgba(255,255,255,0.12)' }}>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      if (!isLiked(item.id)) toggleLike(item);
+                                      setOpenMenuId(null);
+                                      setOpenSubmenu(null);
+                                    }}
+                                    style={menuItemStyle}
+                                  >
+                                    <i className={isLiked(item.id) ? "bi bi-heart-fill" : "bi bi-heart"} style={{ color: isLiked(item.id) ? 'var(--am-accent)' : 'inherit' }} />
+                                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                      Liked Songs {isLiked(item.id) ? '✓' : ''}
+                                    </span>
+                                  </button>
+                                  {playlistFolders.map((folder) => (
+                                    <button type="button" key={folder.id} onClick={() => addSongToPlaylist(folder.id, item)} style={menuItemStyle}>
+                                      <i className="bi bi-folder" /> <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{folder.name}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                              <button type="button" onClick={() => setOpenSubmenu(openSubmenu === 'sleep' ? null : 'sleep')} style={menuItemStyle}>
+                                <i className="bi bi-moon-stars" /> Sleep timer <i className="bi bi-chevron-right" style={{ marginLeft: 'auto' }} />
+                              </button>
+                              {openSubmenu === 'sleep' && (
+                                <div style={{ margin: '2px 0 6px', paddingLeft: '8px', borderLeft: '1px solid rgba(255,255,255,0.12)' }}>
+                                  {[5, 10, 15, 30, 60].map((minutes) => (
+                                    <button type="button" key={minutes} onClick={() => { startSleepTimer(minutes); setOpenMenuId(null); setOpenSubmenu(null); }} style={menuItemStyle}>
+                                      <i className="bi bi-clock" /> {minutes} minutes
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  toggleSongInQueue(item);
+                                  setOpenMenuId(null);
+                                  setOpenSubmenu(null);
+                                }}
+                                style={menuItemStyle}
+                                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+                              >
+                                <i className={isQueued(item.id) ? "bi bi-check-circle" : "bi bi-plus-circle"} /> {isQueued(item.id) ? 'Remove from queue' : 'Add to queue'}
+                              </button>
+                              <button type="button" onClick={() => { setSongInfo(item); setOpenMenuId(null); }} style={menuItemStyle} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
+                                <i className="bi bi-info-circle" /> Song info
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -371,9 +513,44 @@ const SearchPage = () => {
             ))
           )}
         </div>
+        </>
+      )}
       </section>
+      {songInfo && (
+        <div onClick={() => setSongInfo(null)} style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'grid', placeItems: 'center', padding: '20px', background: 'rgba(0,0,0,0.72)' }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="song-info-title" onClick={(event) => event.stopPropagation()} onMouseLeave={() => setSongInfo(null)} style={{ width: 'min(440px, 100%)', padding: '24px', borderRadius: '28px', background: 'rgba(30,30,30,0.25)', backdropFilter: 'blur(75px) saturate(180%)', WebkitBackdropFilter: 'blur(75px) saturate(180%)', border: '1px solid rgba(255,255,255,0.06)', color: '#fff', boxShadow: '0 8px 32px rgba(0,0,0,0.6)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+              <h2 id="song-info-title" style={{ margin: 0, fontSize: '20px' }}>Song info</h2>
+              <button type="button" aria-label="Close song info" onClick={() => setSongInfo(null)} style={{ border: 0, background: 'transparent', color: '#b3b3b3', cursor: 'pointer', fontSize: '20px' }}><i className="bi bi-x-lg" /></button>
+            </div>
+            {songInfo.thumbnailUrl && <img src={songInfo.thumbnailUrl} alt="" style={{ display: 'block', width: '100%', aspectRatio: '16 / 9', objectFit: 'cover', borderRadius: '8px', marginBottom: '16px' }} />}
+            <h3 style={{ margin: '0 0 6px', fontSize: '18px', fontWeight: 400 }}>{songInfo.title || 'Unknown title'}</h3>
+            <p style={{ margin: '0 0 16px', color: '#b3b3b3' }}>{songInfo.artist || 'Unknown artist'}</p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', color: '#b3b3b3', fontSize: '13px' }}>
+              <span>Duration: {formatDuration(songInfo.duration)}</span>
+              {songInfo.viewCount > 0 && <span>Views: {formatViewCount(songInfo.viewCount)}</span>}
+              {songInfo.id && <span style={{ gridColumn: '1 / -1', overflowWrap: 'anywhere' }}>Track ID: {songInfo.id}</span>}
+            </div>
+          </section>
+        </div>
+      )}
     </main>
   );
+};
+
+const menuItemStyle = {
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '10px',
+  padding: '9px 10px',
+  border: 0,
+  borderRadius: '5px',
+  background: 'transparent',
+  color: '#fff',
+  textAlign: 'left',
+  fontSize: '13px',
+  cursor: 'pointer'
 };
 
 export default SearchPage;

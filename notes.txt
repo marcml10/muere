@@ -1,0 +1,3 @@
+Connected divice visibility, Olaying mode (stereo, Dolby atmos), audio quality, Modern UI + Vinyl player view(even in minimization should still have controls and positioning), Equalizer, Changing sound modes as per their genre, 
+Blurred theme with album having lighting matching the song theme, Local audio being playable importing from the local.  
+Genre displaying

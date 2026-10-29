@@ -22,13 +22,55 @@ export const isShortTrack = (track) => {
   return false;
 };
 
+const TITLE_SEPARATOR = /\s+[-–—|]\s+/;
+
+const normalizeWords = (value = '') => String(value)
+  .toLowerCase()
+  .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+  .split(/\s+/)
+  .filter(Boolean);
+
+const matchRatio = (queryWords, text) => {
+  const textWords = new Set(normalizeWords(text));
+  const hits = queryWords.filter((word) => textWords.has(word)).length;
+  return queryWords.length ? hits / queryWords.length : 0;
+};
+
+/** Cleans a matching YouTube title and rejects results unrelated to the query. */
+export const filterSongTitle = (query, title, channels = [], threshold = 0.8) => {
+  const cleanTitle = String(title || '').trim();
+  const queryWords = normalizeWords(query);
+  if (!cleanTitle || queryWords.length === 0) return cleanTitle || null;
+
+  const queryKey = queryWords.join(' ');
+  const isChannelSearch = channels.some((channel) => normalizeWords(channel).join(' ') === queryKey);
+  if (isChannelSearch) return cleanTitle;
+
+  if (matchRatio(queryWords, cleanTitle) < threshold) return null;
+
+  const segments = cleanTitle.split(TITLE_SEPARATOR).map((segment) => segment.trim());
+  if (segments.length === 1) return cleanTitle;
+
+  let bestSegment = segments[0];
+  let bestScore = -1;
+  for (const segment of segments) {
+    const score = matchRatio(queryWords, segment);
+    if (score > bestScore) {
+      bestSegment = segment;
+      bestScore = score;
+    }
+  }
+
+  return bestScore >= threshold ? bestSegment : cleanTitle;
+};
+
 /**
  * Filters out YouTube Shorts and sorts remaining tracks by view count descending,
  * while preserving artist channel information.
  * @param {Array|Object} data - Raw track results or { tracks, channel } object from SearchBar
  * @returns {Object} { tracks: Array, channel: Object|null }
  */
-export const filterAndSortByViews = (data) => {
+export const filterAndSortByViews = (data, query = '') => {
   if (!data) return { tracks: [], channel: null };
   
   // 1. Determine raw tracks and channel from input payload
@@ -42,8 +84,16 @@ export const filterAndSortByViews = (data) => {
     channel = data.channel || null;
   }
 
-  // 2. Remove all YouTube Shorts
-  const fullLengthTracks = rawTracks.filter(track => !isShortTrack(track));
+  const channelNames = [channel?.name, channel?.title].filter(Boolean);
+
+  // Remove Shorts, filter unrelated results by query, and keep the best matching title segment.
+  const fullLengthTracks = rawTracks
+    .filter(track => track && !isShortTrack(track))
+    .map((track) => {
+      const cleanedTitle = filterSongTitle(query, track.title, channelNames);
+      return cleanedTitle ? { ...track, title: cleanedTitle } : null;
+    })
+    .filter(Boolean);
 
   // 3. Sort by view count in descending order
   const sorted = fullLengthTracks.sort((a, b) => {
