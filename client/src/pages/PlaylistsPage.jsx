@@ -68,7 +68,6 @@ const PlaylistsPage = () => {
     <main className="main-content">
       <header className="header">
         <h1>Playlists</h1>
-        <div className="profile-icon" />
       </header>
 
       <section aria-label="Playlist folders">

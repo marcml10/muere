@@ -138,7 +138,6 @@ const MainContent = () => {
     <main className="main-content">
       <header className="header">
         <h1>Home</h1>
-        <div className="profile-icon"></div>
       </header>
 
       {/* Recently Played Section */}

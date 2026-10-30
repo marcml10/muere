@@ -15,7 +15,6 @@ const LikedSongsPage = () => {
     <main className="main-content">
       <header className="header">
         <h1>Liked Songs</h1>
-        <div className="profile-icon" />
       </header>
 
       <section aria-label="Liked songs">
