@@ -8,6 +8,7 @@
     "server": "node server/index.js",
     "build": "vite build",
     "lint": "eslint .",
+    "test:e2e": "playwright test",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -177,6 +177,8 @@ const PlayerBar = ({ onOpenCurrentSong }) => {
         <button 
           className="dock-btn" 
           onClick={toggleQueue} 
+          aria-label="Open queue"
+          title="Open queue"
           style={{ 
             fontSize: '18px', 
             color: isQueueVisible ? 'var(--am-accent)' : 'rgba(255, 255, 255, 0.7)',
