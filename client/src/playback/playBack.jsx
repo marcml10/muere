@@ -29,6 +29,7 @@ export const PlaybackProvider = ({ children }) => {
   const [prevVolume, setPrevVolume] = useState(100);
 
   const historyContext = useContext(HistoryContext);
+  const { recordTrack } = historyContext || {};
 
   useEffect(() => {
     try {
@@ -40,14 +41,13 @@ export const PlaybackProvider = ({ children }) => {
 
   // Synchronize playback track info to HistoryContext and historyStorage
   useEffect(() => {
-    if (currentTrack && currentTrack.id) {
-      if (historyContext?.recordTrack) {
-        historyContext.recordTrack(currentTrack);
-      } else {
-        historyStorage.addTrack(currentTrack);
-      }
+    if (!currentTrack?.id) return;
+    if (recordTrack) {
+      recordTrack(currentTrack);
+    } else {
+      historyStorage.addTrack(currentTrack);
     }
-  }, [currentTrack?.id, historyContext]);
+  }, [currentTrack?.id, recordTrack]);
 
   const toggleMute = () => {
     if (volume > 0) {

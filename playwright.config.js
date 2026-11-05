@@ -71,10 +71,19 @@ export default defineConfig({
     // },
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'npm run dev -- --host 127.0.0.1',
-    url: 'http://127.0.0.1:5173',
-    reuseExistingServer: !process.env.CI,
-  },
+  /* Run the API and the dev server before starting the tests.
+     The app fetches http://localhost:3000/api/trending directly, so e2e needs both. */
+  webServer: [
+    {
+      command: 'npm run server',
+      url: 'http://localhost:3000/api/trending',
+      reuseExistingServer: !process.env.CI,
+      timeout: 60_000,
+    },
+    {
+      command: 'npm run dev -- --host 127.0.0.1',
+      url: 'http://127.0.0.1:5173',
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });
