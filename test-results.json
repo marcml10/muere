@@ -1,0 +1,1597 @@
+{
+  "config": {
+    "argv": [
+      "/home/esaumuieh/.nvm/versions/node/v22.23.3/bin/node",
+      "/home/esaumuieh/kaita_koime/Projects/muer/node_modules/.bin/playwright",
+      "test",
+      "--reporter=json"
+    ],
+    "configFile": "/home/esaumuieh/kaita_koime/Projects/muer/playwright.config.js",
+    "rootDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 6
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "name": "chromium",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "snapshotDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "trace": "on-first-retry",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Safari/537.36",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "name": "firefox",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "snapshotDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "trace": "on-first-retry",
+          "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:157.0) Gecko/20100101 Firefox/157.0",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1920,
+            "height": 1080
+          },
+          "deviceScaleFactor": 1,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "firefox"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "firefox"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "name": "webkit",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "snapshotDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "trace": "on-first-retry",
+          "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+          "viewport": {
+            "width": 1280,
+            "height": 720
+          },
+          "screen": {
+            "width": 1792,
+            "height": 1120
+          },
+          "deviceScaleFactor": 2,
+          "isMobile": false,
+          "hasTouch": false,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "webkit"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "name": "Mobile Chrome",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "snapshotDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "trace": "on-first-retry",
+          "userAgent": "Mozilla/5.0 (Linux; Android 11; Pixel 5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 393,
+            "height": 727
+          },
+          "screen": {
+            "width": 393,
+            "height": 851
+          },
+          "deviceScaleFactor": 2.75,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "Mobile Chrome"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/home/esaumuieh/kaita_koime/Projects/muer/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "name": "Mobile Safari",
+        "testDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "snapshotDir": "/home/esaumuieh/kaita_koime/Projects/muer/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 30000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "trace": "on-first-retry",
+          "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1",
+          "viewport": {
+            "width": 390,
+            "height": 664
+          },
+          "screen": {
+            "width": 390,
+            "height": 844
+          },
+          "deviceScaleFactor": 3,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "webkit"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "Mobile Safari"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.0",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "example.spec.js",
+      "file": "example.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Muer loads the Home view",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:30.945Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dd9b2edffe9b7501040c-7bfa516f3c586b111e91",
+          "file": "example.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Muer loads the Home view",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 7466,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:31.037Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dd9b2edffe9b7501040c-f748c535cf04168ec9eb",
+          "file": "example.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Muer loads the Home view",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 4,
+                  "status": "failed",
+                  "duration": 821,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js:4:14",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js",
+                      "column": 14,
+                      "line": 4
+                    },
+                    "snippet": "  2 |\n  3 | test('Muer loads the Home view', async ({ page }) => {\n> 4 |   await page.goto('/');\n    |              ^\n  5 |\n  6 |   // \"Home\" also appears in the sidebar nav, so assert on the heading.\n  7 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js",
+                        "column": 14,
+                        "line": 4
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  2 |\n  3 | test('Muer loads the Home view', async ({ page }) => {\n> 4 |   await page.goto('/');\n    |              ^\n  5 |\n  6 |   // \"Home\" also appears in the sidebar nav, so assert on the heading.\n  7 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js:4:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:34.996Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/example-Muer-loads-the-Home-view-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js",
+                    "column": 14,
+                    "line": 4
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "dd9b2edffe9b7501040c-20a50f103b88eb88b539",
+          "file": "example.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Muer loads the Home view",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [
+                {
+                  "workerIndex": 18,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 1545,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:44.625Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dd9b2edffe9b7501040c-d35b6d3a30e77b348782",
+          "file": "example.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "Muer loads the Home view",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Safari",
+              "projectName": "Mobile Safari",
+              "results": [
+                {
+                  "workerIndex": 20,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 736,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js:4:14",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js",
+                      "column": 14,
+                      "line": 4
+                    },
+                    "snippet": "  2 |\n  3 | test('Muer loads the Home view', async ({ page }) => {\n> 4 |   await page.goto('/');\n    |              ^\n  5 |\n  6 |   // \"Home\" also appears in the sidebar nav, so assert on the heading.\n  7 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js",
+                        "column": 14,
+                        "line": 4
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n  2 |\n  3 | test('Muer loads the Home view', async ({ page }) => {\n> 4 |   await page.goto('/');\n    |              ^\n  5 |\n  6 |   // \"Home\" also appears in the sidebar nav, so assert on the heading.\n  7 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js:4:14"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:47.003Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/example-Muer-loads-the-Home-view-Mobile-Safari/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/example.spec.js",
+                    "column": 14,
+                    "line": 4
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "dd9b2edffe9b7501040c-916ecc901545399770a2",
+          "file": "example.spec.js",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+      "file": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-01-Home to liked back home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 2482,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js:5:68",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                      "column": 68,
+                      "line": 5
+                    },
+                    "snippet": "  3 | test('UI-01-Home to liked back home', async ({ landingPage: page }) => {\n  4 |   await page.getByRole('listitem').filter({ hasText: 'Liked' }).click();\n> 5 |   await expect(page.getByRole('heading', { name: 'Liked Songs' })).toBeVisible();\n    |                                                                    ^\n  6 |\n  7 |   await page.getByRole('listitem').filter({ hasText: 'Home' }).click();\n  8 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                        "column": 68,
+                        "line": 5
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n\n\n  3 | test('UI-01-Home to liked back home', async ({ landingPage: page }) => {\n  4 |   await page.getByRole('listitem').filter({ hasText: 'Liked' }).click();\n> 5 |   await expect(page.getByRole('heading', { name: 'Liked Songs' })).toBeVisible();\n    |                                                                    ^\n  6 |\n  7 |   await page.getByRole('listitem').filter({ hasText: 'Home' }).click();\n  8 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js:5:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:30.956Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-01-Home-to-l-09573--01-Home-to-liked-back-home-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                    "column": 68,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1143f1b2a326baada8fd-1d3e7db313a149e76d04",
+          "file": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-01-Home to liked back home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6420,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js:5:68",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                      "column": 68,
+                      "line": 5
+                    },
+                    "snippet": "  3 | test('UI-01-Home to liked back home', async ({ landingPage: page }) => {\n  4 |   await page.getByRole('listitem').filter({ hasText: 'Liked' }).click();\n> 5 |   await expect(page.getByRole('heading', { name: 'Liked Songs' })).toBeVisible();\n    |                                                                    ^\n  6 |\n  7 |   await page.getByRole('listitem').filter({ hasText: 'Home' }).click();\n  8 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                        "column": 68,
+                        "line": 5
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n\n\n  3 | test('UI-01-Home to liked back home', async ({ landingPage: page }) => {\n  4 |   await page.getByRole('listitem').filter({ hasText: 'Liked' }).click();\n> 5 |   await expect(page.getByRole('heading', { name: 'Liked Songs' })).toBeVisible();\n    |                                                                    ^\n  6 |\n  7 |   await page.getByRole('listitem').filter({ hasText: 'Home' }).click();\n  8 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js:5:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:34.555Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-01-Home-to-l-09573--01-Home-to-liked-back-home-firefox/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                    "column": 68,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1143f1b2a326baada8fd-57915432757ccecb3ed2",
+          "file": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-01-Home to liked back home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 4,
+                  "status": "failed",
+                  "duration": 1003,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:37.077Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-01-Home-to-l-09573--01-Home-to-liked-back-home-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1143f1b2a326baada8fd-8a10aef89cfcfdd4c443",
+          "file": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-01-Home to liked back home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1708,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js:5:68",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                      "column": 68,
+                      "line": 5
+                    },
+                    "snippet": "  3 | test('UI-01-Home to liked back home', async ({ landingPage: page }) => {\n  4 |   await page.getByRole('listitem').filter({ hasText: 'Liked' }).click();\n> 5 |   await expect(page.getByRole('heading', { name: 'Liked Songs' })).toBeVisible();\n    |                                                                    ^\n  6 |\n  7 |   await page.getByRole('listitem').filter({ hasText: 'Home' }).click();\n  8 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                        "column": 68,
+                        "line": 5
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: getByRole('heading', { name: 'Liked Songs' })\nExpected: visible\nError: strict mode violation: getByRole('heading', { name: 'Liked Songs' }) resolved to 2 elements:\n    1) <h1>Liked Songs</h1> aka locator('h1')\n    2) <h2>Liked Songs</h2> aka getByRole('region', { name: 'Liked songs' }).getByRole('heading', { name: 'Liked Songs' })\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" getByRole('heading', { name: 'Liked Songs' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByRole('heading', { name: 'Liked Songs' })\u001b[22m\n\n\n  3 | test('UI-01-Home to liked back home', async ({ landingPage: page }) => {\n  4 |   await page.getByRole('listitem').filter({ hasText: 'Liked' }).click();\n> 5 |   await expect(page.getByRole('heading', { name: 'Liked Songs' })).toBeVisible();\n    |                                                                    ^\n  6 |\n  7 |   await page.getByRole('listitem').filter({ hasText: 'Home' }).click();\n  8 |   await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n    at /home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js:5:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:43.840Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-01-Home-to-l-09573--01-Home-to-liked-back-home-Mobile-Chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/navigation/UI-01-Home-to-liked-back-home.spec.js",
+                    "column": 68,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1143f1b2a326baada8fd-715011febd8bbd24f219",
+          "file": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-01-Home to liked back home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Safari",
+              "projectName": "Mobile Safari",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 5,
+                  "status": "failed",
+                  "duration": 737,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:47.288Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-01-Home-to-l-09573--01-Home-to-liked-back-home-Mobile-Safari/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1143f1b2a326baada8fd-9c21bf5bec9c6ab6d93a",
+          "file": "navigation/UI-01-Home-to-liked-back-home.spec.js",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+      "file": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-02-Home to Search back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 2526,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:31.098Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90ebd445ab8cbb0feff9-cd4cc43be9fead1a890e",
+          "file": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-02-Home to Search back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:34.834Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90ebd445ab8cbb0feff9-54b6f14d66022e69aba7",
+          "file": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-02-Home to Search back Home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 4,
+                  "status": "failed",
+                  "duration": 940,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:39.747Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-02-Home-to-S-23102-02-Home-to-Search-back-Home-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "90ebd445ab8cbb0feff9-06a15b8267ad01b0b1fb",
+          "file": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-02-Home to Search back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 2015,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:43.991Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "90ebd445ab8cbb0feff9-45bedf466e7bf294b63d",
+          "file": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-02-Home to Search back Home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Safari",
+              "projectName": "Mobile Safari",
+              "results": [
+                {
+                  "workerIndex": 22,
+                  "parallelIndex": 3,
+                  "status": "failed",
+                  "duration": 931,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:47.346Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-02-Home-to-S-23102-02-Home-to-Search-back-Home-Mobile-Safari/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "90ebd445ab8cbb0feff9-a317a461ae79cb7cabce",
+          "file": "navigation/UI-02-Home-to-Search-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+      "file": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-03-Home to Playlists back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 2621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:30.995Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e916305a1bdae3ec3d34-7c4d98e3aa3c093b3c5e",
+          "file": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-03-Home to Playlists back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 8598,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:35.019Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e916305a1bdae3ec3d34-f572299c0cc16b37ba2c",
+          "file": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-03-Home to Playlists back Home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 5,
+                  "status": "failed",
+                  "duration": 942,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:41.714Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-03-Home-to-P-db997-Home-to-Playlists-back-Home-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e916305a1bdae3ec3d34-4da3cfbadd2733d98434",
+          "file": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-03-Home to Playlists back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [
+                {
+                  "workerIndex": 17,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 1897,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:44.430Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e916305a1bdae3ec3d34-ab5c1c6f29ecdae8b546",
+          "file": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-03-Home to Playlists back Home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Safari",
+              "projectName": "Mobile Safari",
+              "results": [
+                {
+                  "workerIndex": 23,
+                  "parallelIndex": 4,
+                  "status": "failed",
+                  "duration": 815,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:47.534Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-03-Home-to-P-db997-Home-to-Playlists-back-Home-Mobile-Safari/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e916305a1bdae3ec3d34-53a7fed7f0803923a85f",
+          "file": "navigation/UI-03-Home-to-Playlists-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+      "file": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-04-Home to Settings back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 2742,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:30.966Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f9f1c8775a414b65d9-4d2365b0059565b03ea6",
+          "file": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-04-Home to Settings back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 6514,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:34.918Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f9f1c8775a414b65d9-fe1fa8bc8399fa571ce3",
+          "file": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-04-Home to Settings back Home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 4,
+                  "status": "failed",
+                  "duration": 920,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:42.169Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-04-Home-to-S-428c2--Home-to-Settings-back-Home-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "35f9f1c8775a414b65d9-89236a5d3f4f4f716313",
+          "file": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-04-Home to Settings back Home",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Chrome",
+              "projectName": "Mobile Chrome",
+              "results": [
+                {
+                  "workerIndex": 19,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 2206,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:45.590Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "35f9f1c8775a414b65d9-253a138f3fde30dc58d3",
+          "file": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        },
+        {
+          "title": "UI-04-Home to Settings back Home",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "Mobile Safari",
+              "projectName": "Mobile Safari",
+              "results": [
+                {
+                  "workerIndex": 24,
+                  "parallelIndex": 2,
+                  "status": "failed",
+                  "duration": 563,
+                  "error": {
+                    "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)",
+                    "location": {
+                      "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                      "column": 16,
+                      "line": 5
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39mfixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                        "column": 16,
+                        "line": 5
+                      },
+                      "message": "Error: page.goto: WebKit encountered an internal error\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:5173/\", waiting until \"load\"\u001b[22m\n\n\n   at fixtures/landingPage.js:5\n\n  3 | export const test = base.extend({\n  4 |   landingPage: async ({ page }, use) => {\n> 5 |     await page.goto('/');\n    |                ^\n  6 |     await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();\n  7 |     await use(page);\n  8 |   },\n    at Object.landingPage (/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js:5:16)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-07T10:52:48.727Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/esaumuieh/kaita_koime/Projects/muer/test-results/navigation-UI-04-Home-to-S-428c2--Home-to-Settings-back-Home-Mobile-Safari/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/esaumuieh/kaita_koime/Projects/muer/tests/fixtures/landingPage.js",
+                    "column": 16,
+                    "line": 5
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "35f9f1c8775a414b65d9-e03e10a0857a7aefa7cd",
+          "file": "navigation/UI-04-Home-to-Settings-back-Home.spec.js",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-07T10:52:30.052Z",
+    "duration": 19453.708,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 13,
+    "flaky": 0
+  }
+}
