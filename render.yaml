@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: muer
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm run server
+    healthCheckPath: /
+    envVars:
+      - key: YOUTUBE_API_KEY
+        sync: false

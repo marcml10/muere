@@ -93,7 +93,7 @@ const MainContent = () => {
     const fetchTrending = async () => {
       try {
         setIsLoadingTrending(true);
-        const res = await fetch('http://localhost:3000/api/trending');
+        const res = await fetch('/api/trending');
         if (!res.ok) throw new Error(`HTTP error ${res.status}`);
         const data = await res.json();
         const tracks = Array.isArray(data.tracks) ? data.tracks : (Array.isArray(data) ? data : []);
